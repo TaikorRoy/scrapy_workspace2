@@ -10,7 +10,7 @@ from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
 
 class TutorialPipeline(object):
-    json_file_name = 'MianBuJingHua.json'
+    json_file_name = 'MianBuDiShuang_9.json'
 
     def __init__(self):
         self.file = codecs.open(TutorialPipeline.json_file_name, 'wb', encoding='utf-8')
@@ -21,7 +21,9 @@ class TutorialPipeline(object):
         line = line.replace('\\r', '')
         line = line.replace('\\n', '')
         line = line.replace('\\t', '')
+        line = line.replace(' ','')
         line = line.replace('}', '},')
+        line = line + '\n'
         self.file.write(line.decode("unicode_escape"))
         return item
 
@@ -29,7 +31,7 @@ class TutorialPipeline(object):
         self.file.close()
         with open(TutorialPipeline.json_file_name, 'r') as f:
             s = f.read()
-            s = s.rstrip(',')
+            s = s.rstrip(',\n')
             s = '[' + s + ']'
         with open(TutorialPipeline.json_file_name, 'w') as f:
             f.write(s)

@@ -6,12 +6,15 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 import codecs
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
 
 class TutorialPipeline(object):
     json_file_name = 'MianBuDiShuang.json'
 
     def __init__(self):
         self.file = codecs.open(TutorialPipeline.json_file_name, 'wb', encoding='utf-8')
+        dispatcher.connect(self.spider_closed, signals.spider_closed)
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item))
@@ -23,13 +26,11 @@ class TutorialPipeline(object):
         self.file.write(line.decode("unicode_escape"))
         return item
 
-    def close_spider(self, spider):
-        """
+    def spider_closed(self, spider):
         self.file.close()
-        with open(TutorialPipeline.json_file_name, 'r', encoding='utf-8') as f:
+        with open(TutorialPipeline.json_file_name, 'r') as f:
             s = f.read()
-            s.rstrip(',')
+            s = s.rstrip(',')
             s = '[' + s + ']'
-        with open('MianBuJingHua.json', 'r', encoding='utf-8') as f:
+        with open(TutorialPipeline.json_file_name, 'w') as f:
             f.write(s)
-        """
