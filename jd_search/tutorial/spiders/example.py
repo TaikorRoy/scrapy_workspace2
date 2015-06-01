@@ -19,7 +19,6 @@ class TutorialSpider(scrapy.Spider):
     start_urls = ('http://search.jd.com/Search?keyword='+kw+'&enc=utf-8' for kw in kw_list)
 
     def parse(self, response):
-        #base_xpath = "/html/body[@class='root61']/div[@class='w main']/div[@class='right-extra']/div[@id='plist']/ul[@class='list-h clearfix']"
         for sel in response.xpath("//ul[@class='list-h clearfix']/li/div[@class='lh-wrap']"):
             item = TutorialItem()
             item['sku'] = 'None'  # placeholder
@@ -27,5 +26,4 @@ class TutorialSpider(scrapy.Spider):
             item['title'] = sel.xpath("div[@class='p-name']/a/font[1]/text()").extract()
             item['type'] = 'None'
             item['price'] = sel.xpath("div[@class='p-price']/strong/text()").extract()
-        #item['url'] = response.url
             yield item

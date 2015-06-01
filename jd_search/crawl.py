@@ -9,7 +9,7 @@ from scrapy.utils.project import get_project_settings
 
 
 def crawl():
-    spider = TutorialSpider(domain='search.jd.com')
+    spider = TutorialSpider(domain='searxxxchxxxom')
     settings = get_project_settings()
     crawler = Crawler(settings)
     crawler.signals.connect(reactor.stop, signal=signals.spider_closed)

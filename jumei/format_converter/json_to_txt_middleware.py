@@ -8,7 +8,7 @@ Created on Thu May 14 17:27:01 2015
 import os
 import json
 
-folder_path = r'C:\workspace\化妆品电商\商品目录jumei\json'
+folder_path = r'C:\workspace\化妆品电商\商品目录jumei\修正后\json'
 files = os.listdir(folder_path)
 for i in range(len(files)):
     files[i] = os.path.join(folder_path, files[i])
@@ -21,10 +21,7 @@ for file in files:
     products = json.loads(content)
 
     for product in products:
-        if len(product["title"]) > 1:
-            lines.append(product["title"][1])
-        else:
-            lines.append(product["title"][0])
+        lines.append(product["title"])
     s = '\n'.join(lines)
     
     with open(file+'.txt', 'w', encoding='utf-8') as f:
