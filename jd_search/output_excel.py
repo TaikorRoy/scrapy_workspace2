@@ -4,7 +4,6 @@ from tutorial.pipelines import TutorialPipeline
 from format_converter.converter_lib import json_to_txt
 from format_converter.converter_lib import txt_to_excel
 
-
 def output_excel():
     raw_output = TutorialPipeline.json_file_name
     txt = json_to_txt(raw_output)

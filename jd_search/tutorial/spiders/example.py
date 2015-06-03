@@ -13,9 +13,8 @@ kw_list = list()
 for product in products:
     kw_list.append(product["title"][0])
 
-
-class MianMoSpider(scrapy.Spider):
-    name = "MianMo"
+class TutorialSpider(scrapy.Spider):
+    name = "jd"
     allowed_domains = ["http://search.jd.com"]
     start_urls = ('http://search.jd.com/Search?keyword='+kw+'&enc=utf-8' for kw in kw_list)
 

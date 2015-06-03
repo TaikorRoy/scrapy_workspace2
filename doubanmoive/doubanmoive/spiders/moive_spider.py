@@ -4,7 +4,6 @@ from scrapy.contrib.spiders import CrawlSpider,Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from doubanmoive.items import DoubanmoiveItem
 
-
 class MoiveSpider(CrawlSpider):
     name="doubanmoive"
     allowed_domains=["movie.douban.com"]
@@ -14,7 +13,7 @@ class MoiveSpider(CrawlSpider):
         Rule(SgmlLinkExtractor(allow=(r'http://movie.douban.com/subject/\d+')),callback="parse_item"),
     ]
 
-    def parse_item(self, response):
+    def parse_item(self,response):
         sel=Selector(response)
         item=DoubanmoiveItem()
         item['name']=sel.xpath('//*[@id="content"]/h1/span[1]/text()').extract()
