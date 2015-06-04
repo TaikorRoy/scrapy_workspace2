@@ -19,6 +19,7 @@ class TutorialPipeline(object):
 
     def __init__(self):
         self.file = {job: codecs.open(job, 'wb', encoding='utf-8') for job in TutorialPipeline.jobs}
+        # create empty files named as the file names listed in the relative_path
         dispatcher.connect(self.spider_closed, signals.spider_closed)
 
     def process_item(self, item, spider):
@@ -29,19 +30,16 @@ class TutorialPipeline(object):
         line = line.replace(' ', '')
         line = line.replace('}', '},')
         line += '\n'
-        if spider.name == "MianMo":
-            self.file["MianMo.json"].write(line.decode("unicode_escape"))
-        if spider.name == "JingHua":
-            self.file["JingHua.json"].write(line.decode("unicode_escape"))
+        self.file[spider.name].write(line.decode("unicode_escape"))
+        # write data into a file, the name of the file is given by the name attribute of spider object (spider.name)
         return item
 
     def spider_closed(self, spider):
-        for spider_name, file_obj in self.file.items():
-            file_obj.close()
-        for key in self.file.keys():
-            with open(key, 'r') as f:
-                s = f.read()
-                s = s.rstrip(',\n')
-                s = '[' + s + ']'
-            with open(key, 'w') as f:
-                f.write(s)
+        self.file[spider.name].close()
+        # close the file: spider.name
+        with open(spider.name, 'r') as f:
+            s = f.read()
+            s = s.rstrip(',\n')
+            s = '[' + s + ']'
+        with open(spider.name, 'w') as f:
+            f.write(s)

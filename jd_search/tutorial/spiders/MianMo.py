@@ -15,7 +15,7 @@ for product in products:
 
 
 class MianMoSpider(scrapy.Spider):
-    name = "MianMo"
+    name = "MianMo.json"  # this value must match the name of the corresponding job list file in the global data folder
     allowed_domains = ["http://search.jd.com"]
     start_urls = ('http://search.jd.com/Search?keyword='+kw+'&enc=utf-8' for kw in kw_list)
 
