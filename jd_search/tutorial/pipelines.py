@@ -4,14 +4,17 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+import os
+import sys
 import json
 import codecs
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
-import os
 
-relative_path = "C:\workspace\WebCrawler\scrapy_workspace2\data\catalog"  # For portability, use relative path is a must, her for the proceed of a test use absolute path instead
-job_list = os.listdir(relative_path)  # a job is the crawling task for all items listed on the XXX(job).json file
+base_path = sys.path[0]
+relative_path = r'tutorial\data\catalog'
+real_path = os.path.join(base_path, relative_path)
+job_list = os.listdir(relative_path)
 
 
 class TutorialPipeline(object):

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import scrapy
 from tutorial.items import TutorialItem
-from scrapy.selector import Selector
 from tutorial.spiders.load_product_obj import load_product_obj
 
-local_path = os.getcwd()
-base_path = local_path.rstrip(r"jd_search/tutorial/spiders")
-products = load_product_obj(base_path+r'/data/catalog/MianMo.json')
+base_path = sys.path[0]
+relative_path = r'tutorial\data\catalog\MianMo.json'
+real_path = os.path.join(base_path, relative_path)
+products = load_product_obj(real_path)
 
 kw_list = list()
 for product in products:
