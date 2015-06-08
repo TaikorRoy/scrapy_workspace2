@@ -11,30 +11,26 @@ import codecs
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
 
-base_path = sys.path[0]
-relative_path = r'tutorial\data\catalog'
-real_path = os.path.join(base_path, relative_path)
-job_list = os.listdir(relative_path)
 
-
-class TutorialPipeline(object):
+class LocalFilePipeline(object):
+    base_path = sys.path[0]
+    relative_path = r'tutorial\data\catalog'
+    real_path = os.path.join(base_path, relative_path)
+    job_list = os.listdir(relative_path)
     jobs = job_list
 
     def __init__(self):
-        self.file = {job: codecs.open(job, 'wb', encoding='utf-8') for job in TutorialPipeline.jobs}
+        self.file = {job: codecs.open(job, 'wb', encoding='utf-8') for job in LocalFilePipeline.jobs}
         # create empty files named as the file names listed in the relative_path
         dispatcher.connect(self.spider_closed, signals.spider_closed)
 
     def process_item(self, item, spider):
-        line = json.dumps(dict(item))
-        line = line.replace('\\r', '')
-        line = line.replace('\\n', '')
-        line = line.replace('\\t', '')
-        line = line.replace(' ', '')
-        line = line.replace('}', '},')
-        line += '\n'
-        self.file[spider.name].write(line.decode("unicode_escape"))
-        # write data into a file, the name of the file is given by the name attribute of spider object (spider.name)
+        if len(item.keys()) == 8:
+            line = json.dumps(dict(item))
+            line = line.replace('}', '},')
+            line += '\n'
+            self.file[spider.name].write(line.decode("unicode_escape"))
+            # write data into a file, the name of the file is given by the name attribute of spider object (spider.name)
         return item
 
     def spider_closed(self, spider):

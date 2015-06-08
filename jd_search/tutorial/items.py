@@ -10,9 +10,15 @@ import scrapy
 
 class TutorialItem(scrapy.Item):
     # define the fields for your item here like:
-    type = scrapy.Field()
-    sku = scrapy.Field()
-    brand = scrapy.Field()
-    title = scrapy.Field()
-    size = scrapy.Field()
+
+    # Scrapped Items
+    vendor_url = scrapy.Field()
+    source_name = scrapy.Field()
     price = scrapy.Field()
+    scrapping_time = scrapy.Field()
+    sales_volume = scrapy.Field()
+    comments = scrapy.Field()
+
+    # Generated Items
+    sku_name = scrapy.Field()
+    B2C_platform = scrapy.Field()

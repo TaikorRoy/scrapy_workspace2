@@ -8,7 +8,7 @@ from tutorial.spiders.JingHua import JingHuaSpider
 from tutorial.spiders.MianMo import MianMoSpider
 from scrapy.utils.project import get_project_settings
 
-spiders = [JingHuaSpider, MianMoSpider]   # load spider classes
+spiders = [JingHuaSpider]   # load spider classes
 
 
 def setup_crawler(spider_class):

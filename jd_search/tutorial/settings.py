@@ -17,5 +17,5 @@ NEWSPIDER_MODULE = 'tutorial.spiders'
 #USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
 
 ITEM_PIPELINES = {
-    'tutorial.pipelines.TutorialPipeline':300
+    'tutorial.pipelines.LocalFilePipeline':300
 }
